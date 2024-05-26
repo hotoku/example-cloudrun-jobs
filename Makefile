@@ -39,4 +39,18 @@ commit-hash: tree-clean
 tree-clean:
 	@if [ $$(git status -s | wc -l) -ge 1 ]; then echo "Error: local tree is dirty."; false; fi	
 
+.PHONY: deploy
+deploy: image
+	gcloud run jobs deploy $(JOB_NAME) \
+		--region=$(GCP_REGION) \
+        --image=$(IMAGE_PATH):$(IMAGE_TAG) \
+		--parallelism=100
+
+.PHONY: execute
+execute:
+	gcloud run jobs execute $(JOB_NAME) \
+		--region=$(GCP_REGION) \
+		--wait \
+		--tasks=108 \
+		--args=$(shell date +%Y%m%d%H%M%S)
 
