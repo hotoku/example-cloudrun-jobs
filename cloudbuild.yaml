@@ -1,0 +1,21 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    id: build-image
+    args:
+      - build
+      - --build-arg
+      - SHORT_SHA=$SHORT_SHA
+      - -t
+      - $_GCP_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/$_IMAGE_NAME:$SHORT_SHA
+      - .
+    automapSubstitutions: true
+  - name: "gcr.io/cloud-builders/docker"
+    id: push-image
+    args:
+      - push
+      - $_GCP_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/$_IMAGE_NAME:$SHORT_SHA
+    automapSubstitutions: true
+    waitFor:
+      - build-image
+images:
+  - $_GCP_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/$_IMAGE_NAME:$SHORT_SHA
