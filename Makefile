@@ -44,7 +44,7 @@ deploy: image
 	gcloud run jobs deploy $(JOB_NAME) \
 		--region=$(GCP_REGION) \
         --image=$(IMAGE_PATH):$(IMAGE_TAG) \
-		--parallelism=100
+		--parallelism=0
 
 .PHONY: execute
 execute:
