@@ -44,13 +44,13 @@ deploy: image
 	gcloud run jobs deploy $(JOB_NAME) \
 		--region=$(GCP_REGION) \
         --image=$(IMAGE_PATH):$(IMAGE_TAG) \
-		--parallelism=0
+		--parallelism=20
 
 .PHONY: execute
 execute:
 	gcloud run jobs execute $(JOB_NAME) \
 		--region=$(GCP_REGION) \
 		--wait \
-		--tasks=108 \
+		--tasks=21 \
 		--args=$(shell date +%Y%m%d%H%M%S)
 
