@@ -5,6 +5,8 @@
 - deploy 時に、parallelism を設定しておく。tasks の値以上にはできないので、tasks に適当な値を設定する。
 - execute 時に、tasks の値は調整可能。
 
+deploy時に最大限に並列化するように指定(parallelismを指定しない or 0)して、execute時にtasksの数を大きくすると、そのタスクの数だけのコンテナを立ち上げようとする。この数が、GCPのquotaの制限を超えていると正常に実行されない。
+
 ```makefile
 .PHONY: deploy
 deploy: image
