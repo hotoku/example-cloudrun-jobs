@@ -52,6 +52,6 @@ execute:
 	gcloud run jobs execute $(JOB_NAME) \
 		--region=$(GCP_REGION) \
 		--wait \
-		--tasks=21 \
+		--tasks=100 \
 		--args=$(shell date +%Y%m%d%H%M%S)
 
